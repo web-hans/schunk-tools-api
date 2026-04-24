@@ -1,0 +1,6 @@
+@SchunkToolsApi_HostAddress = http://localhost:5010
+
+GET {{SchunkToolsApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

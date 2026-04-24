@@ -1,0 +1,35 @@
+# ===== .NET =====
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.log
+*.nupkg
+.env
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+*.egg-info/
+dist/
+.pytest_cache/
+.mypy_cache/
+*.pyc
+
+# ===== Docker =====
+*.dockerignore
+
+# ===== Generierte Dateien =====
+*.step
+*.stp
+/tmp/
+
+# ===== IDE =====
+.idea/
+*.swp
+.DS_Store
+Thumbs.db

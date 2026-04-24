@@ -1,0 +1,30 @@
+services:
+
+  # ── C# .NET Web API ───────────────────────────────────────────────────────
+  api:
+    build:
+      context: ./src/SchunkToolsApi
+      dockerfile: Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      # Überschreibt BaseUrl aus appsettings.json mit der Docker-internen Adresse
+      - ToolGenerator__BaseUrl=http://toolgen:8000
+    depends_on:
+      toolgen:
+        condition: service_healthy   # Erst starten, wenn Python-Service bereit ist
+
+  # ── Python FastAPI + build123d ────────────────────────────────────────────
+  toolgen:
+    build:
+      context: ./src/tool_generator
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"                  # Auch direkt erreichbar für lokale Tests
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s              # build123d-Import dauert beim ersten Start
